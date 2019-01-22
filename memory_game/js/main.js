@@ -14,11 +14,19 @@ var cards = [{rank: 'queen',
               cardImage: 'images/king-of-diamonds.png'}];
 var cardsInPlay=[];
 
+window.localStorage.setItem('score',0);
+
+// Bug: localStorage not working across sessions.
+
 var checkForMatch = function(){
   if (cardsInPlay[0]===cardsInPlay[1]){
-    console.log('You found a match!');
+    let score = window.localStorage.getItem(parseInt('score'));
+    score += 1
+    alert(`You found a match! Your score is ${score}`);
+    location.reload(false);
   } else{
-    console.log('Sorry, try again');
+    alert('Sorry, try again');
+    location.reload(false);
   }
 };
 
@@ -50,6 +58,16 @@ var flipCard = function(){
 for (var i=0; i<cardElements.length; i++){
   cardElements[i].addEventListener('click',flipCard);
 }
+
+var button = document.querySelector('button');
+
+var reset = function(){
+  var section =  document.querySelector('section');
+  console.log(section)
+  location.reload(false);
+}
+
+button.addEventListener('click', reset)
 
 
 

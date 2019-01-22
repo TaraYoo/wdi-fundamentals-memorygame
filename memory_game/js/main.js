@@ -20,17 +20,37 @@ var checkForMatch = function(){
   } else{
     console.log('Sorry, try again');
   }
-}
+};
 
-var flipCard = function(cardId){
-  console.log(`User flipped ${cards[cardId].rank}`);
-  cardsInPlay.push(cards[cardId].rank);
-  console.log(cards[cardId].suit);
-  console.log(cards[cardId].cardImage);
+
+var createBoard = function(){
+  for (var i=0; i<cards.length; i++){
+    var cardElement = document.createElement('img');
+    cardElement.setAttribute('src','images/back.png');
+    cardElement.setAttribute('data-id',i);
+    document.getElementById('game-board').appendChild(cardElement);
+  };
+};
+
+createBoard();
+
+var cardElements = document.querySelectorAll('img')
+
+var flipCard = function(){
+  var cardId = this.getAttribute('data-id');
+  var setImage = cards[parseInt(cardId)].cardImage;
+  var cardRank = cards[parseInt(cardId)].rank;
+  this.setAttribute('src', setImage);
+  cardsInPlay.push(cardRank);
   if (cardsInPlay.length===2){
     checkForMatch();
   }
+};
+
+for (var i=0; i<cardElements.length; i++){
+  cardElements[i].addEventListener('click',flipCard);
 }
+
 
 
 /*
